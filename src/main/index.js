@@ -20,6 +20,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
+    show: false,
     width: 1000
   })
 
@@ -27,6 +28,11 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.setMenu(null)
+    mainWindow.show()
   })
 }
 
@@ -59,7 +65,7 @@ io.on('connection', (socket) => {
   });
 });
 http.listen(3000, () => {
-  console.log('Connected at 3000');
+  console.log('Connected at 3000'); // http의 http 소켓 연결
 });
 /**
  * Auto Updater

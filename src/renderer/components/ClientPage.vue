@@ -6,12 +6,10 @@
                 {{chat}}
             </div>
         </div>
-    <form action="">
-      <input v-model="m" autocomplete="off" /><button @click="sending()">Send</button>
-    </form>
-    
+        <form action="">
+            <input v-model="m" autocomplete="off" /><button @click="sending()">Send</button>
+        </form>
     </div>
-
 </template>
 <style scoped>
 
