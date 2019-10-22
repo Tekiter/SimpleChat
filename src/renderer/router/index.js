@@ -17,7 +17,7 @@ export default new Router({
     },
     {
       path: '/client',
-      name: 'ClientPage',
+      name: 'clientPage',
       component: require('@/components/ClientPage.vue').default
     },
     {
