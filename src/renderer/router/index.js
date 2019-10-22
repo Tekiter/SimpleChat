@@ -7,8 +7,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'landing-page',
-      component: require('@/components/LandingPage').default
+      name: 'mainPage',
+      component: require('@/components/MainPage.vue').default
+    },
+    {
+      path: '/server',
+      name: 'serverManagePage',
+      component: require('@/components/ServerManagePage.vue').default
+    },
+    {
+      path: '/client',
+      name: 'ClientPage',
+      component: require('@/components/ClientPage.vue').default
     },
     {
       path: '*',
