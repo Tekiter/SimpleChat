@@ -27,11 +27,8 @@ export default {
           this.$router.push('server')
       },
       onClient() {
-<<<<<<< HEAD
+
             this.$router.push('client')
-=======
-          this.$router.push('client')
->>>>>>> 35c9641871971150b45e50f6a1e2360eb55ddc96
       }
   }
 };

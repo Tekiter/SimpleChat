@@ -61,11 +61,11 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
   socket.on('disconnect', () => {
-  console.log('user disconnected');
+    console.log('user disconnected');
   });
 });
-http.listen(3000, () => {
-  console.log('Connected at 3000'); // http의 http 소켓 연결
+http.listen(3001, () => {
+  console.log('Connected at 3001'); // http의 http 소켓 연결
 });
 /**
  * Auto Updater
