@@ -20,6 +20,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
+    show: false,
     width: 1000
   })
 
@@ -27,6 +28,11 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.setMenu(null)
+    mainWindow.show()
   })
 }
 
