@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/ServerCreatePage.vue').default
     },
     {
+      path: '/servermanage',
+      name: 'serverManagePage',
+      component: require('@/components/ServerManagePage.vue').default
+    },
+    {
       path: '/client',
       name: 'clientPage',
       component: require('@/components/ClientPage.vue').default

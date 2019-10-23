@@ -133,7 +133,11 @@ ipcMain.on('ServerCreate', function (evt, arg) {
 
     socket.on('chat', (msg) => {
       console.log(msg)
-      io.emit('chat', msg)
+      io.emit('chat', {
+        data: msg, 
+        nickname: chatServer.users[socket.id].nickname, 
+        ip: chatServer.users[socket.id].ip
+      })
     })
 
   })

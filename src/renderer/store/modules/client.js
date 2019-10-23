@@ -1,6 +1,7 @@
 const state = {
     ip: '127.0.0.1',
-    port: 54321
+    port: 54321,
+    nickname: "guest"
 }
 
 const mutations = {
@@ -8,9 +9,13 @@ const mutations = {
         
         state.port = port
     },
-    SET_IP_CLIENT (state, port) {
+    SET_IP_CLIENT (state, ip) {
         
-        state.port = port
+        state.ip = ip
+    },
+    SET_NICKNAME_CLIENT (state, nickname) {
+        
+        state.nickname = nickname
     }
 }
 
@@ -22,6 +27,10 @@ const actions = {
     setJoinIP({ commit, state }, ip) {
         
         commit('SET_IP_CLIENT', ip)
+    },
+    setJoinNickname({ commit, state }, nickname) {
+        
+        commit('SET_NICKNAME_CLIENT', nickname)
     }
 }
 

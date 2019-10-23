@@ -33,6 +33,8 @@ export default {
             // this.$store.commit('SET_PORT_SERVER', this.serverport)
 
             this.$electron.ipcRenderer.send('ServerCreate', { port: this.serverport })
+
+            this.$router.push('servermanage')
         }
     }
 }

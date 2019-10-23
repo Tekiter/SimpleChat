@@ -7,11 +7,14 @@
         <b-form-group label="IP">
           <b-form-input v-model="serverip"></b-form-input>
         </b-form-group>
-        <b-form-group label="port">
+        <b-form-group label="Port">
           <b-form-input v-model="serverport"></b-form-input>
         </b-form-group>
+        <b-form-group label="Nickname">
+          <b-form-input v-model="nickname"></b-form-input>
+        </b-form-group>
 
-        <b-button class="btn btn-success" @click="onJoin()">Create</b-button>
+        <b-button class="btn btn-success" @click="onJoin()">Join</b-button>
       </b-form>
     </div>
   </div>
@@ -23,15 +26,17 @@ export default {
   data() {
     return {
       serverip: '127.0.0.1',
-      serverport: 54321
+      serverport: 54321,
+      nickname: "guest"
     };
   },
 
   methods: {
     onJoin() {
       this.$store.dispatch("setJoinPort", this.serverport);
-      this.$store.dispatch("setJoinIP", this.serverport);
-      // this.$store.commit('SET_PORT_SERVER', this.serverport)
+      this.$store.dispatch("setJoinIP", this.serverip);
+      this.$store.dispatch("setJoinNickname", this.nickname);
+      
       this.$router.push('client');
     }
   }

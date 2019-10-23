@@ -23,10 +23,11 @@ export default {
     };
   },
   mounted() {
-    // let addr = this.$store.state.client.ip + ":" + this.$store.state.client.port;
-    // console.log(addr)
-    this.socket = io("127.0.0.1:54321");
-    this.socket.emit("join", { nickname: "hi" });
+    let addr = this.$store.state.client.ip + ":" + this.$store.state.client.port;
+    console.log(addr)
+    // this.socket = io("127.0.0.1:54321");
+    this.socket = io(addr)
+    this.socket.emit("join", { nickname: this.$store.state.client.nickname });
     this.socket.on("chat", msg => {
       this.lists.push({ chat: msg, idx: 1 });
     });
