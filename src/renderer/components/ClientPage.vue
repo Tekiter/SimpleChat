@@ -27,6 +27,11 @@ export default {
     console.log(addr)
     // this.socket = io("127.0.0.1:54321");
     this.socket = io(addr)
+
+    this.socket.on('connect_error', (err) => {
+        this.lists.push('COULD NOT CONNECT')
+    });
+
     this.socket.emit("join", { nickname: this.$store.state.client.nickname });
     this.socket.on("chat", msg => {
       this.lists.push({ chat: msg, idx: 1 });

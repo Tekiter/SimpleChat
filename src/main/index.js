@@ -14,8 +14,8 @@ let chatServer = new Object()
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
-  
-function createWindow () {
+
+function createWindow() {
   /**
    * Initial window options
    */
@@ -39,7 +39,7 @@ function createWindow () {
   mainWindow.once('ready-to-show', () => {
     mainWindow.setMenu(null)
     mainWindow.show()
-    
+
     mainWindow = new BrowserWindow({
       height: 563,
       useContentSize: true,
@@ -50,9 +50,9 @@ function createWindow () {
         nativeWindowOpen: true
       }
     })
-  
+
     mainWindow.loadURL(winURL)
-  
+
     mainWindow.on('closed', () => {
       mainWindow = null
       if (chatServer.io) {
@@ -60,12 +60,12 @@ function createWindow () {
         chatServer.io.close()
       }
     })
-  
+
     mainWindow.once('ready-to-show', () => {
       mainWindow.setMenu(null)
       mainWindow.show()
-      
-  
+
+
     })
   })
 }
@@ -87,7 +87,7 @@ app.on('activate', () => {
 
 
 
-ipcMain.on('ServerCreate', function (evt, arg) {
+ipcMain.on('ServerCreate', (evt, arg) => {
 
   if (chatServer.io) {
     return
@@ -96,44 +96,59 @@ ipcMain.on('ServerCreate', function (evt, arg) {
 
   const expapp = require('express')()
   const http = require('http').createServer(expapp)
-  
-  // expapp.get('/', (req, res) => {
-  //   res.send('asdfasdfasdfsdf')
-  // })
-
   const io = require('socket.io')(http)
 
   http.listen(arg['port'], () => {
     console.log('server ' + arg['port'] + ' created')
   })
 
+  evt.sender.send('ServerLog', 'logon')
 
   chatServer.io = io
   chatServer.port = arg['port']
   chatServer.users = new UserList()
+  chatServer.logCount = 1
+  chatServer.sendLog = function (msg, type='info') {
+    evt.sender.send('ServerLog', {
+      seq: chatServer.logCount++,
+      type: type,
+      msg: msg,
+    })
+  }
 
 
   io.on('connection', (socket) => {
     console.log('User connecting...')
+    chatServer.sendLog('User connecting...')
+
+
+    socket.on('disconnect', function(){
+      let user = chatServer.users.get(socket.id)
+      console.log('User disconnected : ' + user.nickname);
+      chatServer.sendLog('User disconnected : ' + user.nickname)
+    });
 
     socket.on('join', (header) => {
       if (header.nickname) {
 
         chatServer.users.register(socket.id, header.nickname, socket.handshake.address)
-        
+
         socket.emit('joined', header.nickname)
-        
+
         console.log('User Joined! : ' + header.nickname)
+        chatServer.sendLog('User Joined! : ' + header.nickname)
 
       }
     })
 
     socket.on('chat', (msg) => {
       console.log(msg)
-      io.emit('chat', {
-        data: msg, 
-        nickname: chatServer.users.get(socket.id).nickname, 
-        ip: chatServer.users.get(socket.id).ip
+      let user = chatServer.users.get(socket.id)
+      chatServer.sendLog(user.nickname + ': ' + msg)
+      io.emit('chat', { 
+        data: msg,
+        nickname: user.nickname,
+        ip: user.ip
       })
     })
 

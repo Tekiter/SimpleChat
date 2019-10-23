@@ -19,3 +19,6 @@ UserList.prototype.registered = function(id) {
     return !!this.get(id)
 }
 
+UserList.prototype.unregister = function (id) {
+    delete this.users[id]
+}
