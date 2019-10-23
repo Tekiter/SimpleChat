@@ -21,7 +21,11 @@ function createWindow () {
     height: 563,
     useContentSize: true,
     show: false,
-    width: 1000
+    width: 1000,
+    webPreferences: {
+      "nodeIntegration": true,
+      nativeWindowOpen: true
+    }
   })
 
   mainWindow.loadURL(winURL)
