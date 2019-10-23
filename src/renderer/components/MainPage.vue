@@ -22,13 +22,16 @@
 <script>
 export default {
   name: "mainPage",
+  data() {
+    return {
+    }
+  },
   methods: {
       onServer() {
           this.$router.push('server')
       },
       onClient() {
-
-            this.$router.push('client')
+          this.$router.push('join')
       }
   }
 };

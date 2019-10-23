@@ -12,13 +12,18 @@ export default new Router({
     },
     {
       path: '/server',
-      name: 'serverManagePage',
-      component: require('@/components/ServerManagePage.vue').default
+      name: 'serverCreatePage',
+      component: require('@/components/ServerCreatePage.vue').default
     },
     {
       path: '/client',
       name: 'clientPage',
       component: require('@/components/ClientPage.vue').default
+    },
+    {
+      path: '/join',
+      name: 'joinPage',
+      component: require('@/components/ClientJoinPage.vue').default
     },
     {
       path: '*',
