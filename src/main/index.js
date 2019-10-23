@@ -133,7 +133,7 @@ ipcMain.on('ServerCreate', function (evt, arg) {
 
     socket.on('chat', (msg) => {
       console.log(msg)
-      io.emit(msg)
+      io.emit('chat', msg)
     })
 
   })
