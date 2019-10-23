@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
+import { UserList } from './user'
 
 /**
  * Set `__static` path to static files in production
@@ -109,7 +110,7 @@ ipcMain.on('ServerCreate', function (evt, arg) {
 
   chatServer.io = io
   chatServer.port = arg['port']
-  chatServer.users = {}
+  chatServer.users = new UserList()
 
 
   io.on('connection', (socket) => {
@@ -117,12 +118,8 @@ ipcMain.on('ServerCreate', function (evt, arg) {
 
     socket.on('join', (header) => {
       if (header.nickname) {
-        let user = {
-          nickname: header.nickname,
-          ip: socket.handshake.address.address,
-          port: socket.handshake.address.port
-        }
-        chatServer.users[socket.id] = user
+
+        chatServer.users.register(socket.id, header.nickname, socket.handshake.address)
         
         socket.emit('joined', header.nickname)
         
@@ -135,8 +132,8 @@ ipcMain.on('ServerCreate', function (evt, arg) {
       console.log(msg)
       io.emit('chat', {
         data: msg, 
-        nickname: chatServer.users[socket.id].nickname, 
-        ip: chatServer.users[socket.id].ip
+        nickname: chatServer.users.get(socket.id).nickname, 
+        ip: chatServer.users.get(socket.id).ip
       })
     })
 
