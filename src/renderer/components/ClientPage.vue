@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-button :to="'/'">Back to main</b-button>
+    <user-list :users="users"></user-list>
     <div v-for="(chat, idx) of lists" :key="idx">
       <div>{{chat}}</div>
     </div>
@@ -13,29 +14,45 @@
 </style>
 <script>
 import io from "socket.io-client";
+import UserList from "./Client/UserList.vue";
 
 export default {
+  components: {
+      UserList
+  },
   data() {
     return {
       socket: null,
       m: "",
-      lists: []
+      lists: [],
+      users: []
     };
   },
   mounted() {
-    let addr = this.$store.state.client.ip + ":" + this.$store.state.client.port;
-    console.log(addr)
+    let addr =
+      this.$store.state.client.ip + ":" + this.$store.state.client.port;
+    console.log(addr);
     // this.socket = io("127.0.0.1:54321");
-    this.socket = io(addr)
+    this.socket = io(addr);
 
-    this.socket.on('connect_error', (err) => {
-        this.lists.push('COULD NOT CONNECT')
+    this.socket.on("connect_error", err => {
+      this.lists.push("COULD NOT CONNECT");
     });
+
+    this.socket.on("chat", msg => {
+        this.lists.push({ chat: msg, idx: 1 });
+    });
+    this.socket.on("userlist", users => {
+        this.users = users
+    })
+    this.socket.on("joined", user => {
+        this.users.push(user)
+    })
+
 
     this.socket.emit("join", { nickname: this.$store.state.client.nickname });
-    this.socket.on("chat", msg => {
-      this.lists.push({ chat: msg, idx: 1 });
-    });
+    this.socket.emit("userlist", {})
+
   },
   methods: {
     sending() {
