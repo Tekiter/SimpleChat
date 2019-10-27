@@ -40,6 +40,8 @@ function createWindow() {
     mainWindow.setMenu(null)
     mainWindow.show()
 
+    /* Multiwindow starup for debugging */
+    
     mainWindow = new BrowserWindow({
       height: 563,
       useContentSize: true,
@@ -67,11 +69,12 @@ function createWindow() {
 
 
     })
+
+    /* End Multiwindow starup for debugging */
   })
 }
 
 app.on('ready', createWindow)
-// app.on('ready', () => {createWindow();createWindow();})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -167,25 +170,6 @@ ipcMain.on('ServerCreate', (evt, arg) => {
 
 })
 
-
-// const appp = require('express')();
-// const http = require('http').createServer(appp);
-// const io = require('socket.io')(http);
-// appp.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-// io.on('connection', (socket) => {
-//   console.log('a user connected');
-//   socket.on('chat message', (msg) => {
-//     io.emit('chat message', msg);
-//   });
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//   });
-// });
-// http.listen(3001, () => {
-//   console.log('Connected at 3001'); // http의 http 소켓 연결
-// });
 /**
  * Auto Updater
  *
