@@ -2,7 +2,7 @@
   <div class="main-screen">
     <div class="d-flex flex-column">
       <div>
-        asdf
+        A Simple chat app
       </div>
       <div class="flex-grow-1" style="height: 0px">
         <div>
@@ -10,7 +10,7 @@
             <b-button @click="onClient()">Client</b-button>
         </div>
       </div>
-      <div class="bg-warning">Footer</div>
+      <div class=""></div>
     </div>
   </div>
 </template>
