@@ -1,16 +1,46 @@
 <template>
-  <div>
-    <b-button :to="'/'">Back to main</b-button>
-    <user-list :users="users"></user-list>
-    <div v-for="(chat, idx) of lists" :key="idx">
-      <div>{{chat}}</div>
-    </div>
+  <div class="main-screen">
+    <div class="d-flex flex-column">
+      <div>
+        <b-button :to="'/'">Back to main</b-button>
+      </div>
+      <div class="flex-grow-1" style="height: 0px">
+        <div class="d-flex flex-row">
+          <div class="sidebar">
+            <user-list :users="users"></user-list>
+          </div>
+          <div class="flex-grow-1 p-3">
+            <div v-for="(chatdata, idx) of lists" :key="idx">
+              <div>
+                <p>{{ chatdata.chat.nickname }} : {{ chatdata.chat.data }} </p>
+              </div>
+            </div>
+            <div class="input-group ">
 
-    <input v-model="m" autocomplete="off" />
-    <button @click="sending()">Send</button>
+              <input v-model="m" autocomplete="off" class="form-control"/>
+              <div class="input-group-append">
+                <button @click="sending()" class="btn  btn-outline-secondary">Send</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        
+
+      </div>
+      <div></div>
+    </div>
   </div>
 </template>
 <style scoped>
+.main-screen > div {
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 18em;
+}
 </style>
 <script>
 import io from "socket.io-client";
@@ -18,7 +48,7 @@ import UserList from "./Client/UserList.vue";
 
 export default {
   components: {
-      UserList
+    UserList
   },
   data() {
     return {
@@ -40,19 +70,17 @@ export default {
     });
 
     this.socket.on("chat", msg => {
-        this.lists.push({ chat: msg, idx: 1 });
+      this.lists.push({ chat: msg, idx: 1 });
     });
     this.socket.on("userlist", users => {
-        this.users = users
-    })
+      this.users = users;
+    });
     this.socket.on("joined", user => {
-        this.users.push(user)
-    })
-
+      this.users.push(user);
+    });
 
     this.socket.emit("join", { nickname: this.$store.state.client.nickname });
-    this.socket.emit("userlist", {})
-
+    this.socket.emit("userlist", {});
   },
   methods: {
     sending() {
