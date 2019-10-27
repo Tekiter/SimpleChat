@@ -1,9 +1,9 @@
 {
-  "name": "adminconsole",
+  "name": "simplechat",
   "version": "0.0.1",
   "author": "Tekiter <tekiter8@gmail.com>",
-  "description": "HolyShield 2019",
-  "license": null,
+  "description": "Just a simple chat",
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -17,8 +17,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "adminconsole",
-    "appId": "com.adminconsole.adminconsole",
+    "productName": "simplechat",
+    "appId": "com.tekiter.simplechat",
     "directories": {
       "output": "build"
     },

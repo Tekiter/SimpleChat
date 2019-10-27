@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "adminconsole"
+  name: "simplechat"
 };
 </script>
 
